@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  mysqldb:
+    networks:
+      - mydb-net
+    image: mysql
+    restart: 'unless-stopped'
+    container_name: mysql-ekomerce
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_USER: 'root'
+      MYSQL_DATABASE: 'ekomerce'
+      
+      MYSQL_USER: 'ekom'
+      MYSQL_PASSWORD: 'ekom'
+    ports:
+      - '3306:3306'
+    volumes:
+      - java-storage:/var/lib/mysql
+
+volumes:
+  java-storage:
+    driver: local
+    name: java-storage
+
+networks:
+  mydb-net:
+    name: mydb-net
