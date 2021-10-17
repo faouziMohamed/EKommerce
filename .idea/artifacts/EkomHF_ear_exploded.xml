@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="EkomHF:ear exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/EkomHF_ear_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="EkomHF/javaeeApplication/javaEEApplication" />
+    </root>
+  </artifact>
+</component>
