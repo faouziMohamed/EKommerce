@@ -1,9 +1,8 @@
 package com.ekom.servlet;
 
 import com.ekom.controller.Utils;
+import com.ekom.exception.NoUserConnectedException;
 import com.ekom.exception.ParamMissingException;
-import com.ekom.exception.UserNotFoundException;
-import com.ekom.model.Utilisateur;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,25 +17,21 @@ public class EditProductServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
-      Utilisateur user = Utils.getCurrentUser(request);
+      Utils.verifyExistsSessionOrThrow(request);
       String pathInfo = request.getPathInfo();
       String productId = Utils.getPathParam(pathInfo);
-      request.setAttribute("user", user);
       request.setAttribute("pid", productId);
 
       getServletContext()
         .getRequestDispatcher("/WEB-INF/edit-product.jsp")
         .forward(request, response);
-    } catch (UserNotFoundException e) {
-      getServletContext()
-        .getRequestDispatcher("/WEB-INF/edit-product.jsp")
-        .forward(request, response);
-//      response.sendRedirect(request.getContextPath() + "/login");
-
+    } catch (NoUserConnectedException e) {
+      response.sendError(401);
     } catch (ParamMissingException e) {
-      response.setContentType("text/html");
+      response.setContentType("text/json");
+      response.setCharacterEncoding("UTF-8");
       PrintWriter pw = response.getWriter();
-      pw.print(e.getMessage());
+      pw.print("{\"error\": \""+e.getMessage()+"\"}");
     }
   }
 

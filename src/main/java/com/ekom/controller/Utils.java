@@ -1,5 +1,6 @@
 package com.ekom.controller;
 
+import com.ekom.exception.NoUserConnectedException;
 import com.ekom.exception.ParamMissingException;
 import com.ekom.exception.UserNotFoundException;
 import com.ekom.model.Utilisateur;
@@ -7,14 +8,25 @@ import com.ekom.model.Utilisateur;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class Utils {
+public final class Utils {
   public static Utilisateur getCurrentUser(HttpServletRequest request) throws UserNotFoundException {
     HttpSession session = request.getSession(false);
-    Utilisateur user = (Utilisateur) session.getAttribute("user");
-    if (user == null) {
+    Utilisateur user;
+    try{
+    user = (Utilisateur) session.getAttribute("user");
+    }catch(NullPointerException e){
       throw new UserNotFoundException();
     }
     return user;
+  }
+
+  public static void verifyExistsSessionOrThrow(HttpServletRequest req) throws NoUserConnectedException {
+    try {
+      getCurrentUser(req);
+    } catch (UserNotFoundException e) {
+      throw new NoUserConnectedException();
+    }
+
   }
 
   static public String getPathParam(String pathInfo) throws ParamMissingException {

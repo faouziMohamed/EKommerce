@@ -20,30 +20,29 @@ public class LoginServlet extends HttpServlet {
     String email = request.getParameter("email");
     String password = request.getParameter("password");
     HttpSession session = request.getSession();
-
     try {
-      Utilisateur u = EKomService.authentifier(email, password);
+      Utilisateur u = EKomService.getInstance().authentifier(email, password);
+      System.out.println(u.getEmail());
       session.setAttribute("user", u);
-      getServletContext()
-        .getRequestDispatcher("/WEB-INF/products.jsp")
-        .forward(request, response);
-      // Rediriger vers la page principale
-      // response.sendRedirect(mainPage);
-    } catch (AuthException e) {
-      getServletContext()
-        .getRequestDispatcher("/WEB-INF/products.jsp")
-        .forward(request, response);
-      e.printStackTrace();
-      session.setAttribute("error", e.getMessage());
-      // Afficher l'erreur dans le client
-//      doGet(request, response);
-    }
+      response.sendRedirect("/products");
 
+    } catch (AuthException e) {
+      request.setAttribute("error", e.getMessage());
+      doGet(request, response);
+    }
   }
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    HttpSession session = request.getSession();
+    Utilisateur user = (Utilisateur) session.getAttribute("user");
+    if (user != null) {
+      response.sendRedirect("/products");
+      return;
+    }
+    getServletContext()
+      .getRequestDispatcher("/WEB-INF/index.jsp")
+      .forward(request, response);
   }
 
 }
