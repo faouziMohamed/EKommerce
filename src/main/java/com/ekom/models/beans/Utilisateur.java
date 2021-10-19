@@ -1,4 +1,4 @@
-package com.ekom.model;
+package com.ekom.models.beans;
 
 import java.util.Objects;
 
@@ -15,8 +15,9 @@ public class Utilisateur {
     this.password = password;
   }
 
-  public String getNom() {
-    return nom;
+  @Override
+  public int hashCode() {
+    return Objects.hash(getNom(), getPrenom(), getEmail(), getPassword());
   }
 
   @Override
@@ -28,8 +29,17 @@ public class Utilisateur {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(getNom(), getPrenom(), getEmail(), getPassword());
+  public String toString() {
+    return "Utilisateur{" +
+      "nom='" + nom + '\'' +
+      ", prenom='" + prenom + '\'' +
+      ", email='" + email + '\'' +
+      ", password='" + password + '\'' +
+      '}';
+  }
+
+  public String getNom() {
+    return nom;
   }
 
   public void setNom(String nom) {

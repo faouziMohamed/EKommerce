@@ -1,8 +1,8 @@
 package com.ekom.servlet;
 
-import com.ekom.controller.Utils;
 import com.ekom.exception.NoUserConnectedException;
 import com.ekom.exception.ParamMissingException;
+import com.ekom.servlet.controller.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +31,7 @@ public class EditProductServlet extends HttpServlet {
       response.setContentType("text/json");
       response.setCharacterEncoding("UTF-8");
       PrintWriter pw = response.getWriter();
-      pw.print("{\"error\": \""+e.getMessage()+"\"}");
+      pw.print("{\"error\": \"" + e.getMessage() + "\"}");
     }
   }
 

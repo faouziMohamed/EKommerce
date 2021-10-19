@@ -1,8 +1,10 @@
 package com.ekom.servlet;
 
-import com.ekom.controller.EKomService;
 import com.ekom.exception.AuthException;
-import com.ekom.model.Utilisateur;
+import com.ekom.models.UtilisateurDAO;
+import com.ekom.models.beans.Utilisateur;
+import com.ekom.models.dao.DAOFactory;
+import com.ekom.servlet.controller.EKomService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +16,12 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
-  @Override
+  private static final long serialVersionUID = 1L;
+  private UtilisateurDAO utilisateurDAO;
+
+  public void init() {
+    utilisateurDAO = DAOFactory.getInstance().getUtilisateurDAO();
+  }  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     String email = request.getParameter("email");
@@ -36,13 +43,16 @@ public class LoginServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     HttpSession session = request.getSession();
     Utilisateur user = (Utilisateur) session.getAttribute("user");
+
+    utilisateurDAO.getUsers().forEach(System.out::println);
+
     if (user != null) {
       response.sendRedirect("/products");
       return;
     }
-    getServletContext()
-      .getRequestDispatcher("/WEB-INF/index.jsp")
-      .forward(request, response);
+    getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
   }
+
+
 
 }

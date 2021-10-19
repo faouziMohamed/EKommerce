@@ -1,16 +1,16 @@
-package com.ekom.controller;
+package com.ekom.servlet.controller;
 
 import com.ekom.exception.AuthException;
 import com.ekom.exception.IncorrectUserException;
 import com.ekom.exception.UserNotFoundException;
-import com.ekom.model.Utilisateur;
+import com.ekom.models.beans.Utilisateur;
 
 import java.util.TreeMap;
 
 
 public class EKomService {
-  static private TreeMap<String, Utilisateur> users = null;
   private static final EKomService eKomService = new EKomService();
+  static private TreeMap<String, Utilisateur> users = null;
 
   private EKomService() {
     users = new TreeMap<>();
@@ -24,6 +24,26 @@ public class EKomService {
     for (Utilisateur u : utilisateurs) {
       users.put(u.getEmail(), u);
     }
+  }
+
+  public static Utilisateur findUser(String email) throws UserNotFoundException, IncorrectUserException {
+    Utilisateur user = users.get(email);
+    return findUser(user);
+  }
+
+  public static Utilisateur findUser(Utilisateur utilisateur) throws UserNotFoundException, IncorrectUserException {
+    if (utilisateur == null) {
+      throw new IncorrectUserException();
+    }
+    Utilisateur user = users.get(utilisateur.getNom());
+    if (user == null) {
+      throw new UserNotFoundException();
+    }
+    return user;
+  }
+
+  public static EKomService getInstance() {
+    return eKomService;
   }
 
   public Utilisateur authentifier(String email, String password) throws AuthException {
@@ -44,25 +64,5 @@ public class EKomService {
       throw new AuthException("Mot de passe incorrect");
     }
     return u;
-  }
-
-  public static Utilisateur findUser(Utilisateur utilisateur) throws UserNotFoundException, IncorrectUserException {
-    if (utilisateur == null) {
-      throw new IncorrectUserException();
-    }
-    Utilisateur user = users.get(utilisateur.getNom());
-    if (user == null) {
-      throw new UserNotFoundException();
-    }
-    return user;
-  }
-
-  public static Utilisateur findUser(String email) throws UserNotFoundException, IncorrectUserException {
-    Utilisateur user = users.get(email);
-    return findUser(user);
-  }
-
-  public static EKomService getInstance() {
-    return eKomService;
   }
 }

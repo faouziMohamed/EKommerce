@@ -1,8 +1,8 @@
 package com.ekom.servlet.api;
 
-import com.ekom.controller.Utils;
 import com.ekom.exception.UserNotFoundException;
-import com.ekom.model.Utilisateur;
+import com.ekom.models.beans.Utilisateur;
+import com.ekom.servlet.controller.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

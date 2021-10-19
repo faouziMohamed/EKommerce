@@ -1,4 +1,4 @@
-package com.ekom.model;
+package com.ekom.models.beans;
 
 import java.util.Objects;
 
@@ -8,12 +8,16 @@ public class Produit {
   private int qte;
   private double prix;
 
-  public String getNom() {
-    return nom;
+  public Produit(String nom, String id, int qte, double prix) {
+    this.nom = nom;
+    this.id = id;
+    this.qte = qte;
+    this.prix = prix;
   }
 
-  public void setNom(String nom) {
-    this.nom = nom;
+  @Override
+  public int hashCode() {
+    return Objects.hash(getNom(), getId(), getQte(), getPrix());
   }
 
   @Override
@@ -24,17 +28,16 @@ public class Produit {
     return getQte() == produit.getQte() && Double.compare(produit.getPrix(), getPrix()) == 0 && Objects.equals(getNom(), produit.getNom()) && Objects.equals(getId(), produit.getId());
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(getNom(), getId(), getQte(), getPrix());
+  public String getNom() {
+    return nom;
+  }
+
+  public void setNom(String nom) {
+    this.nom = nom;
   }
 
   public String getId() {
     return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public int getQte() {
@@ -53,10 +56,7 @@ public class Produit {
     this.prix = prix;
   }
 
-  public Produit(String nom, String id, int qte, double prix) {
-    this.nom = nom;
+  public void setId(String id) {
     this.id = id;
-    this.qte = qte;
-    this.prix = prix;
   }
 }
