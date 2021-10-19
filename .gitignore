@@ -2,7 +2,9 @@ jee
 .vscode
 target
 bin
-# .idea
 node_modules
 package.json
 yarn.lock
+.classpath
+.project
+.settings/
