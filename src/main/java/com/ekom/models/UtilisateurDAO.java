@@ -16,10 +16,8 @@ public class UtilisateurDAO implements IUtilisateurDAO {
 
   @Override
   public void addUser(Utilisateur user) {
-    Connection con = null;
-
     try {
-      con = daoFactory.getConnection();
+      Connection con = daoFactory.getConnection();
       String query = "INSERT INTO users (nom, prenom,email, password) VALUES(?, ?, ?, ?)";
       PreparedStatement ps = con.prepareStatement(query);
       ps.setString(1, user.getNom());
@@ -28,7 +26,7 @@ public class UtilisateurDAO implements IUtilisateurDAO {
       ps.setString(4, user.getPassword());
       ps.executeUpdate();
     } catch (SQLException e) {
-      System.out.println("Error in adding user query ");
+      System.out.println("Error in adding user query: ");
       e.printStackTrace();
     }
 
@@ -49,7 +47,9 @@ public class UtilisateurDAO implements IUtilisateurDAO {
         users.add(new Utilisateur(nom, prenom, email, password));
       }
     } catch (SQLException e) {
-      System.out.println("An error apear when tring to get all users");
+      System.out.println("An error appear when trying to get all users");
+      System.out.println("Cause : ");
+      e.printStackTrace();
     }
     return users;
   }
@@ -71,7 +71,9 @@ public class UtilisateurDAO implements IUtilisateurDAO {
         user = new Utilisateur(nom, prenom, email1, password);
       }
     } catch (SQLException e) {
-      System.out.println("An error apear when tring to get user by email");
+      System.out.println("An error appear when trying to get user by email");
+      System.out.println("Cause : ");
+      e.printStackTrace();
     }
     return user;
   }

@@ -10,10 +10,6 @@ public class DAOFactory {
   static private DAOFactory instance;
   static private Connection con;
 
-  private DAOFactory(String url, String user) throws SQLException {
-    this(url, user, "");
-  }
-
   private DAOFactory(String url, String user, String password) throws SQLException {
     con = DriverManager.getConnection(url, user, password);
   }
