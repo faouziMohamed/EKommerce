@@ -10,14 +10,21 @@ public class Produit {
   private int qte;
   private double prix;
   private String urlImage;
+  private String description;
 
-  public Produit(String nom, int qte, double prix, String urlImage) {
+  public Produit(String id, String nom, int qte, double prix, String urlImage, String description) {
     this.nom = nom;
     this.qte = qte;
     this.prix = prix;
     this.urlImage = urlImage;
-    this.id = Utils.generateIdFromObj(this);
+    this.description = description;
+    if (id == null) {
+      this.id = Utils.generateIdFromObj(this);
+    } else {
+      this.id = id;
+    }
   }
+
 
   public String getId() {
     return id;
@@ -29,6 +36,14 @@ public class Produit {
 
   public String getNom() {
     return nom;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public void setNom(String nom) {
@@ -64,11 +79,16 @@ public class Produit {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Produit produit = (Produit) o;
-    return getQte() == produit.getQte() && Double.compare(produit.getPrix(), getPrix()) == 0 && getId().equals(produit.getId()) && getNom().equals(produit.getNom()) && getUrlImage().equals(produit.getUrlImage());
+    return getQte() == produit.getQte() &&
+      Double.compare(produit.getPrix(), getPrix()) == 0 &&
+      getId().equals(produit.getId()) &&
+      getNom().equals(produit.getNom()) &&
+      getUrlImage().equals(produit.getUrlImage()) &&
+      Objects.equals(getDescription(), produit.getDescription());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getNom(), getQte(), getPrix(), getUrlImage());
+    return Objects.hash(getId(), getNom(), getQte(), getPrix(), getUrlImage(), getDescription());
   }
 }

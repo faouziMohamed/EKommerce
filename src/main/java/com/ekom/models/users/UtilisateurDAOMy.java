@@ -1,17 +1,17 @@
-package com.ekom.models.dao.implementation;
+package com.ekom.models.users;
 
 import com.ekom.exception.AuthException;
 import com.ekom.models.beans.Utilisateur;
-import com.ekom.models.dao.DAOFactory;
-import com.ekom.models.dao.IUtilisateurDAO;
+import com.ekom.models.dao.DAOMyFactory;
+import com.ekom.models.dao.DAOMyCommon;
 import com.ekom.utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UtilisateurDAO extends DAOCommon implements IUtilisateurDAO {
-  public UtilisateurDAO(DAOFactory daoFactory) {
-    super(daoFactory);
+public class UtilisateurDAOMy extends DAOMyCommon implements IUtilisateurDAO {
+  public UtilisateurDAOMy(DAOMyFactory daoMyFactory) {
+    super(daoMyFactory);
   }
 
   @Override
@@ -33,7 +33,7 @@ public class UtilisateurDAO extends DAOCommon implements IUtilisateurDAO {
   @Override
   public void createTable() {
     try {
-      Connection con = daoFactory.getConnection();
+      Connection con = daoMyFactory.getConnection();
       String query;
       query = "" +
         "CREATE TABLE IF NOT EXISTS users (" +
@@ -58,7 +58,7 @@ public class UtilisateurDAO extends DAOCommon implements IUtilisateurDAO {
   public void addUser(Utilisateur user) {
     String userId = Utils.generateIdFromObj(user);
     try {
-      Connection con = daoFactory.getConnection();
+      Connection con = daoMyFactory.getConnection();
       String query = "INSERT INTO users (uid, nom, prenom,email, password) VALUES(?, ?, ?, ?, ?)";
       PreparedStatement ps = con.prepareStatement(query);
       ps.setString(1, userId);
@@ -78,7 +78,7 @@ public class UtilisateurDAO extends DAOCommon implements IUtilisateurDAO {
   public ArrayList<Utilisateur> getUsers() {
     ArrayList<Utilisateur> users = new ArrayList<>();
     try {
-      Connection con = daoFactory.getConnection();
+      Connection con = daoMyFactory.getConnection();
       Statement statement = con.createStatement();
       ResultSet result = statement.executeQuery("SELECT nom, prenom, email, password FROM users");
       while (result.next()) {
@@ -101,7 +101,7 @@ public class UtilisateurDAO extends DAOCommon implements IUtilisateurDAO {
 
     Utilisateur user = null;
     try {
-      Connection con = daoFactory.getConnection();
+      Connection con = daoMyFactory.getConnection();
       PreparedStatement ps = con.prepareStatement("SELECT nom, prenom, email, password FROM users WHERE email = ?");
       ps.setString(1, email);
       ResultSet result = ps.executeQuery();

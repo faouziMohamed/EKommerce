@@ -1,25 +1,26 @@
 package com.ekom.models.dao;
 
-import com.ekom.models.dao.implementation.UtilisateurDAO;
+import com.ekom.models.products.ProduitDAOMy;
+import com.ekom.models.users.UtilisateurDAOMy;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DAOFactory {
-  static private DAOFactory instance;
+public class DAOMyFactory {
+  static private DAOMyFactory instance;
   static private Connection con;
 
 
-  private DAOFactory(String url, String user, String password) throws SQLException {
+  private DAOMyFactory(String url, String user, String password) throws SQLException {
     con = DriverManager.getConnection(url, user, password);
   }
 
-  public static DAOFactory getInstance() {
+  public static DAOMyFactory getInstance() {
     try {
       if (instance == null) {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        instance = new DAOFactory("jdbc:mysql://127.0.0.1:3306/ekomerce", "ekom", "ekom");
+        instance = new DAOMyFactory("jdbc:mysql://127.0.0.1:3306/ekomerce", "ekom", "ekom");
       }
     } catch (ClassNotFoundException e) {
       System.out.println("Error in loading Mysql Server driver");
@@ -33,7 +34,11 @@ public class DAOFactory {
     return con;
   }
 
-  public UtilisateurDAO getUtilisateurDAO() {
-    return new UtilisateurDAO(this);
+  public UtilisateurDAOMy getUtilisateurDAO() {
+    return new UtilisateurDAOMy(this);
+  }
+
+  public ProduitDAOMy getProduitDAO(){
+    return new ProduitDAOMy(this);
   }
 }

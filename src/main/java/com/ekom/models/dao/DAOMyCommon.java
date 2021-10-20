@@ -1,21 +1,19 @@
-package com.ekom.models.dao.implementation;
-
-import com.ekom.models.dao.DAOFactory;
+package com.ekom.models.dao;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class DAOCommon {
-  protected final DAOFactory daoFactory;
+public abstract class DAOMyCommon {
+  protected final DAOMyFactory daoMyFactory;
 
-  public DAOCommon(DAOFactory daoFactory) {
-    this.daoFactory = daoFactory;
+  public DAOMyCommon(DAOMyFactory daoMyFactory) {
+    this.daoMyFactory = daoMyFactory;
   }
 
   public boolean tableExists(String tableName) throws SQLException {
-    Connection connection = daoFactory.getConnection();
+    Connection connection = daoMyFactory.getConnection();
     DatabaseMetaData meta = connection.getMetaData();
     ResultSet resultSet = meta.getTables(null, null, tableName, new String[]{"TABLE"});
     System.out.println("UtilisateurDAO.tableExists");
@@ -23,7 +21,7 @@ public abstract class DAOCommon {
   }
 
   public boolean isTableEmpty(String tableName) throws SQLException {
-    Connection connexion = daoFactory.getConnection();
+    Connection connexion = daoMyFactory.getConnection();
     ResultSet resultSet;
     int count = 0;
 
@@ -39,5 +37,6 @@ public abstract class DAOCommon {
   }
 
   abstract public void initiateDatabase() throws SQLException;
+
   abstract public void createTable();
 }

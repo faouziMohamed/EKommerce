@@ -1,4 +1,4 @@
-package com.ekom.models.dao;
+package com.ekom.models.users;
 
 import com.ekom.exception.AuthException;
 import com.ekom.models.beans.Utilisateur;

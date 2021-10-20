@@ -1,21 +1,21 @@
 package com.ekom.servlet.controller;
 
 import com.ekom.exception.AuthException;
-import com.ekom.models.dao.implementation.UtilisateurDAO;
+import com.ekom.models.users.UtilisateurDAOMy;
 import com.ekom.models.beans.Utilisateur;
-import com.ekom.models.dao.DAOFactory;
+import com.ekom.models.dao.DAOMyFactory;
 
 
 public class EKomService {
 
   private static final EKomService eKomService = new EKomService();
-  private final UtilisateurDAO utilisateurDAO;
+  private final UtilisateurDAOMy utilisateurDAO;
 
   private EKomService() {
-    utilisateurDAO = DAOFactory.getInstance().getUtilisateurDAO();
+    utilisateurDAO = DAOMyFactory.getInstance().getUtilisateurDAO();
   }
 
-  public UtilisateurDAO getUtilisateurDAO() {
+  public UtilisateurDAOMy getUtilisateurDAO() {
     return utilisateurDAO;
   }
 

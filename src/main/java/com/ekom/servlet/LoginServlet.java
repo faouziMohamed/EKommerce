@@ -1,7 +1,7 @@
 package com.ekom.servlet;
 
 import com.ekom.exception.AuthException;
-import com.ekom.models.dao.implementation.UtilisateurDAO;
+import com.ekom.models.users.UtilisateurDAOMy;
 import com.ekom.models.beans.Utilisateur;
 import com.ekom.servlet.controller.EKomService;
 
@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
 
   public void init() {
     eKomService = EKomService.getInstance();
-    UtilisateurDAO udao = eKomService.getUtilisateurDAO();
+    UtilisateurDAOMy udao = eKomService.getUtilisateurDAO();
     try {
       if (!udao.tableExists("users") || udao.isTableEmpty("users")) {
         udao.initiateDatabase();
