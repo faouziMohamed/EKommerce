@@ -8,14 +8,25 @@ import com.ekom.models.beans.Utilisateur;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public final class Utils {
+public final class EKomUtils {
+
+  static public String getPathParam(String pathInfo) throws ParamMissingException {
+    String id;
+    try {
+      id = pathInfo.split("/")[1];
+    } catch (ArrayIndexOutOfBoundsException e) {
+      String msg = "ID du produit manquant: L'Id du produit à éditer est attendu mais rien n'a été donner";
+      throw new ParamMissingException(msg);
+    }
+    return id;
+  }
+
   public static void verifyExistsSessionOrThrow(HttpServletRequest req) throws NoUserConnectedException {
     try {
       getCurrentUser(req);
     } catch (UserNotFoundException e) {
       throw new NoUserConnectedException();
     }
-
   }
 
   public static Utilisateur getCurrentUser(HttpServletRequest request) throws UserNotFoundException {
@@ -27,16 +38,5 @@ public final class Utils {
       throw new UserNotFoundException();
     }
     return user;
-  }
-
-  static public String getPathParam(String pathInfo) throws ParamMissingException {
-    String id;
-    try {
-      id = pathInfo.split("/")[1];
-    } catch (ArrayIndexOutOfBoundsException e) {
-      String msg = "ID du produit manquant: L'Id du produit à éditer est attendu mais rien n'a été donner";
-      throw new ParamMissingException(msg);
-    }
-    return id;
   }
 }

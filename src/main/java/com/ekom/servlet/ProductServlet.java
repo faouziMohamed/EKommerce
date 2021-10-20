@@ -1,7 +1,7 @@
 package com.ekom.servlet;
 
 import com.ekom.exception.NoUserConnectedException;
-import com.ekom.servlet.controller.Utils;
+import com.ekom.servlet.controller.EKomUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ public class ProductServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
-      Utils.verifyExistsSessionOrThrow(request);
+      EKomUtils.verifyExistsSessionOrThrow(request);
       getServletContext().getRequestDispatcher("/WEB-INF/products.jsp").forward(request, response);
     } catch (NullPointerException | NoUserConnectedException e) {
       response.sendRedirect(request.getContextPath() + "/login");

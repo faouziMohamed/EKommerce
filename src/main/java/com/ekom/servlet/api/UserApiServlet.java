@@ -2,7 +2,7 @@ package com.ekom.servlet.api;
 
 import com.ekom.exception.UserNotFoundException;
 import com.ekom.models.beans.Utilisateur;
-import com.ekom.servlet.controller.Utils;
+import com.ekom.servlet.controller.EKomUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +16,8 @@ public class UserApiServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
-      Utilisateur user = Utils.getCurrentUser(request);
+      Utilisateur user = EKomUtils.getCurrentUser(request);
+      request.getSession().setAttribute("user", user);
     } catch (UserNotFoundException e) {
       e.printStackTrace();
     }

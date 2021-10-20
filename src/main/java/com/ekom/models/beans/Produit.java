@@ -1,31 +1,30 @@
 package com.ekom.models.beans;
 
+import com.ekom.utils.Utils;
+
 import java.util.Objects;
 
 public class Produit {
-  private String nom;
   private String id;
+  private String nom;
   private int qte;
   private double prix;
+  private String urlImage;
 
-  public Produit(String nom, String id, int qte, double prix) {
+  public Produit(String nom, int qte, double prix, String urlImage) {
     this.nom = nom;
-    this.id = id;
     this.qte = qte;
     this.prix = prix;
+    this.urlImage = urlImage;
+    this.id = Utils.generateIdFromObj(this);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(getNom(), getId(), getQte(), getPrix());
+  public String getId() {
+    return id;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Produit produit = (Produit) o;
-    return getQte() == produit.getQte() && Double.compare(produit.getPrix(), getPrix()) == 0 && Objects.equals(getNom(), produit.getNom()) && Objects.equals(getId(), produit.getId());
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getNom() {
@@ -34,10 +33,6 @@ public class Produit {
 
   public void setNom(String nom) {
     this.nom = nom;
-  }
-
-  public String getId() {
-    return id;
   }
 
   public int getQte() {
@@ -56,7 +51,24 @@ public class Produit {
     this.prix = prix;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public String getUrlImage() {
+    return urlImage;
+  }
+
+  public void setUrlImage(String urlImage) {
+    this.urlImage = urlImage;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Produit produit = (Produit) o;
+    return getQte() == produit.getQte() && Double.compare(produit.getPrix(), getPrix()) == 0 && getId().equals(produit.getId()) && getNom().equals(produit.getNom()) && getUrlImage().equals(produit.getUrlImage());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getNom(), getQte(), getPrix(), getUrlImage());
   }
 }

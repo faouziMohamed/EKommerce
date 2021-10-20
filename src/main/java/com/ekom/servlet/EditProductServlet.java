@@ -2,7 +2,7 @@ package com.ekom.servlet;
 
 import com.ekom.exception.NoUserConnectedException;
 import com.ekom.exception.ParamMissingException;
-import com.ekom.servlet.controller.Utils;
+import com.ekom.servlet.controller.EKomUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,9 +17,9 @@ public class EditProductServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
-      Utils.verifyExistsSessionOrThrow(request);
+      EKomUtils.verifyExistsSessionOrThrow(request);
       String pathInfo = request.getPathInfo();
-      String productId = Utils.getPathParam(pathInfo);
+      String productId = EKomUtils.getPathParam(pathInfo);
       request.setAttribute("pid", productId);
 
       getServletContext()

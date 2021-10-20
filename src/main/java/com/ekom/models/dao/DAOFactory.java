@@ -1,6 +1,6 @@
 package com.ekom.models.dao;
 
-import com.ekom.models.UtilisateurDAO;
+import com.ekom.models.dao.implementation.UtilisateurDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class DAOFactory {
   static private DAOFactory instance;
   static private Connection con;
+
 
   private DAOFactory(String url, String user, String password) throws SQLException {
     con = DriverManager.getConnection(url, user, password);
